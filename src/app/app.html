@@ -2,7 +2,7 @@
   <div class="fixed-grid">
     <ng-container *ngFor="let y of rows">
       <ng-container *ngFor="let x of cols">
-        <div class="grid-item">
+        <div class="grid-item" (click)="placeRobot(x, y)">
           ({{ x }}, {{ y }})
         </div>
       </ng-container>

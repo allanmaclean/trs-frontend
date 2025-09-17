@@ -11,4 +11,12 @@ export class DataService {
   getHello() {
     return this.http.get(environment.apiUrl, {responseType: 'text'});
   }
+
+  // TODO: drop the subscribe here, and change responseType if needed
+  updatePosition(x: number, y: number) {
+    return this.http.post(`${environment.apiUrl}/position`, { x, y }, { responseType: 'text' }).subscribe({
+      next: (response) => console.log('Position updated successfully', response),
+      error: (error) => console.error('Error updating position', error)
+    });
+  }
 }
