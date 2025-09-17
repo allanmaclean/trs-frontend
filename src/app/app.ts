@@ -10,8 +10,8 @@ import { DataService } from './data.service';
 })
 export class App {
   readonly gridSize = 5;
-  readonly rows: number[] = Array.from({ length: this.gridSize }, (_, i) => i).reverse();
-  readonly cols: number[] = Array.from({ length: this.gridSize }, (_, i) => i);
+  readonly rows: number[] = Array.from({ length: this.gridSize }, (_, y) => y).reverse();
+  readonly cols: number[] = Array.from({ length: this.gridSize }, (_, x) => x);
 
   protected readonly title = signal('trs-frontend');
 
