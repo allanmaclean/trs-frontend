@@ -2,6 +2,12 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Direction} from './app';
+import { Observable } from 'rxjs';
+
+export interface Move {
+  id: number;
+  move: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +15,8 @@ import { Direction} from './app';
 export class DataService {
   private http = inject(HttpClient);
 
-  getPosition() {
-    return this.http.get(`${environment.apiUrl}/position`);
+  getLastPosition(): Observable<Move> {
+    return this.http.get<Move>(`${environment.apiUrl}/position`);
   }
 
   // TODO: drop the subscribe here, and change responseType if needed

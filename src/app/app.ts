@@ -1,6 +1,6 @@
 import { Component, HostListener, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DataService } from './data.service';
+import { DataService, Move } from './data.service';
 import { RobotComponent } from './robot/robot';
 
 const DIRECTIONS = ['NORTH', 'EAST', 'SOUTH', 'WEST'];
@@ -24,9 +24,11 @@ export class App {
   private dataService = inject(DataService);
 
   ngOnInit() {
-    this.dataService.getPosition().subscribe((data) => {
-      console.log(data);
-      
+    this.dataService.getLastPosition().subscribe((data: Move) => {
+      const moveData = data.move.split(',');
+      this.xPosition = parseInt(moveData[0], 10);
+      this.yPosition = parseInt(moveData[1], 10);
+      this.direction.set(moveData[2] as Direction);
     });
   }
 
