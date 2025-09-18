@@ -20,6 +20,7 @@ export class App {
   direction = signal<Direction>('NORTH');
   xPosition = 0;
   yPosition = 0;
+  instructionsText = "Click to place the robot, use the buttons or arrows to move"
 
   private dataService = inject(DataService);
 
@@ -91,10 +92,19 @@ export class App {
         return this.turnLeft();
       case 'ArrowRight':
         return this.turnRight();
-      case 'Enter':
+      case 'Enter': // NOTE: Problematic for accessibility - if users use tab + return to interract with buttons
         return this.move();
       default:
         return null
     }
   }
+
+  reportPosition(event: Event) {
+    const report = `Output: ${this.xPosition},${this.yPosition},${this.direction()}`;
+    console.log(report);
+    (event.target as HTMLElement).blur();
+    alert(report);
+  }
+
+  
 }

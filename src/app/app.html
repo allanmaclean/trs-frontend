@@ -1,5 +1,8 @@
 <main>
   <div>
+    <div class="instructions-container">
+      <p>{{ instructionsText}}</p>
+    </div>
     <div class="fixed-grid">
       <ng-container *ngFor="let y of rows">
         <ng-container *ngFor="let x of cols">
@@ -9,10 +12,13 @@
         </ng-container>
       </ng-container>
     </div>
-    <div class="button-container">
+    <div class="button-container movement">
       <button (click)="turnLeft()">Left</button>
       <button (click)="move()">Move</button>
       <button (click)="turnRight()">Right</button>
+    </div>
+    <div class="button-container report">
+      <button (click)="reportPosition($event)">Report</button>
     </div>
   </div>
 </main>
