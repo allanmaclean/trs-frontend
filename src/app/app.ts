@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, HostListener, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataService } from './data.service';
 import { RobotComponent } from './robot/robot';
@@ -78,6 +78,21 @@ export class App {
           this.dataService.updatePosition(this.xPosition, this.yPosition);
         }
         break;
+    }
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  handleKeydown(event: any) {
+    console.log(event.key);
+    switch (event.key) {
+      case 'ArrowLeft':
+        return this.turnLeft();
+      case 'ArrowRight':
+        return this.turnRight();
+      case 'Enter':
+        return this.move();
+      default:
+        return null
     }
   }
 }
