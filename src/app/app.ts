@@ -4,7 +4,7 @@ import { DataService } from './data.service';
 import { RobotComponent } from './robot/robot';
 
 const DIRECTIONS = ['NORTH', 'EAST', 'SOUTH', 'WEST'];
-type Direction = typeof DIRECTIONS[number];
+export type Direction = typeof DIRECTIONS[number];
 
 @Component({
   selector: 'app-root',
@@ -35,7 +35,7 @@ export class App {
     if (this.xPosition !== x || this.yPosition !== y) {
       this.xPosition = x;
       this.yPosition = y;
-      this.dataService.updatePosition(x, y);
+      this.dataService.updatePosition(x, y, this.direction());
     }
   }
 
@@ -43,6 +43,7 @@ export class App {
     console.log('LEFT');
     const idx = DIRECTIONS.indexOf(this.direction());
     this.direction.set(DIRECTIONS[(idx + DIRECTIONS.length - 1) % DIRECTIONS.length]);
+    this.dataService.updatePosition(this.xPosition, this.yPosition, this.direction());
   }
 
   turnRight() {
@@ -57,28 +58,25 @@ export class App {
       case 'NORTH':
         if (this.yPosition < this.gridSize - 1) {
           this.yPosition++;
-          this.dataService.updatePosition(this.xPosition, this.yPosition);
         }
         break;
         case 'EAST':
         if (this.xPosition < this.gridSize - 1) {
           this.xPosition++;
-          this.dataService.updatePosition(this.xPosition, this.yPosition);
         }
         break;
       case 'SOUTH':
         if (this.yPosition > 0) {
           this.yPosition--;
-          this.dataService.updatePosition(this.xPosition, this.yPosition);
         }
         break;
       case 'WEST':
         if (this.xPosition > 0) {
           this.xPosition--;
-          this.dataService.updatePosition(this.xPosition, this.yPosition);
         }
         break;
     }
+    this.dataService.updatePosition(this.xPosition, this.yPosition, this.direction());
   }
 
   @HostListener('window:keydown', ['$event'])
