@@ -19,10 +19,11 @@ export class DataService {
     return this.http.get<Move>(`${environment.apiUrl}/position`);
   }
 
-  // TODO: drop the subscribe here, and change responseType if needed
   updatePosition(x: number, y: number, direction: Direction) {
     return this.http.post(`${environment.apiUrl}/position`, { x, y, direction }, { responseType: 'text' }).subscribe({
-      next: (response) => console.log('Position updated successfully', response),
+      next: (response) => (
+        console.log('Position updated successfully')
+      ),
       error: (error) => console.error('Error updating position', error)
     });
   }

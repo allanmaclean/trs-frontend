@@ -34,8 +34,6 @@ export class App {
   }
 
   placeRobot(x: number, y: number) {
-    console.log(`PLACE ${x},${y},${this.direction}`);
-
     if (this.xPosition !== x || this.yPosition !== y) {
       this.xPosition = x;
       this.yPosition = y;
@@ -44,40 +42,45 @@ export class App {
   }
 
   turnLeft() {
-    console.log('LEFT');
     const idx = DIRECTIONS.indexOf(this.direction());
     this.direction.set(DIRECTIONS[(idx + DIRECTIONS.length - 1) % DIRECTIONS.length]);
     this.dataService.updatePosition(this.xPosition, this.yPosition, this.direction());
   }
 
   turnRight() {
-    console.log('RIGHT');
     const idx = DIRECTIONS.indexOf(this.direction());
     this.direction.set(DIRECTIONS[(idx + 1) % DIRECTIONS.length]);
     this.dataService.updatePosition(this.xPosition, this.yPosition, this.direction());
   }
 
   move() {
-    console.log('MOVE');
     switch (this.direction()) {
       case 'NORTH':
         if (this.yPosition < this.gridSize - 1) {
           this.yPosition++;
+        } else {
+          return; // Prevent movement off the grid
         }
         break;
         case 'EAST':
         if (this.xPosition < this.gridSize - 1) {
           this.xPosition++;
+        } else {
+          return; // Prevent movement off the grid 
         }
         break;
       case 'SOUTH':
         if (this.yPosition > 0) {
           this.yPosition--;
+        } else {
+          return; // Prevent movement off the grid
         }
         break;
       case 'WEST':
         if (this.xPosition > 0) {
           this.xPosition--;
+        } else {
+          return; // Prevent movement off the grid
         }
         break;
     }
@@ -86,7 +89,6 @@ export class App {
 
   @HostListener('window:keydown', ['$event'])
   handleKeydown(event: any) {
-    console.log(event.key);
     switch (event.key) {
       case 'ArrowLeft':
         return this.turnLeft();
@@ -101,7 +103,6 @@ export class App {
 
   reportPosition(event: Event) {
     const report = `Output: ${this.xPosition},${this.yPosition},${this.direction()}`;
-    console.log(report);
     (event.target as HTMLElement).blur();
     alert(report);
   }

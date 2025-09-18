@@ -9,7 +9,4 @@ import { Component, input } from '@angular/core';
 })
 export class RobotComponent {
   direction = input('NORTH');
-  ngOnChanges() {
-    console.log('Direction changed to', this.direction());
-  }
 }
