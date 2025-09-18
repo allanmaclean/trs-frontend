@@ -24,8 +24,9 @@ export class App {
   private dataService = inject(DataService);
 
   ngOnInit() {
-    this.dataService.getHello().subscribe((data) => {
+    this.dataService.getPosition().subscribe((data) => {
       console.log(data);
+      
     });
   }
 
@@ -35,7 +36,7 @@ export class App {
     if (this.xPosition !== x || this.yPosition !== y) {
       this.xPosition = x;
       this.yPosition = y;
-      this.dataService.updatePosition(x, y, this.direction());
+      this.dataService.updatePosition(this.xPosition, this.yPosition, this.direction());
     }
   }
 
@@ -50,6 +51,7 @@ export class App {
     console.log('RIGHT');
     const idx = DIRECTIONS.indexOf(this.direction());
     this.direction.set(DIRECTIONS[(idx + 1) % DIRECTIONS.length]);
+    this.dataService.updatePosition(this.xPosition, this.yPosition, this.direction());
   }
 
   move() {

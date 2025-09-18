@@ -9,8 +9,8 @@ import { Direction} from './app';
 export class DataService {
   private http = inject(HttpClient);
 
-  getHello() {
-    return this.http.get(environment.apiUrl, {responseType: 'text'});
+  getPosition() {
+    return this.http.get(`${environment.apiUrl}/position`);
   }
 
   // TODO: drop the subscribe here, and change responseType if needed
