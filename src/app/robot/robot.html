@@ -1,0 +1,29 @@
+<div class="robot-container">
+    <div class="robot-arrow">
+        @switch(direction()) {
+            @case('NORTH') {
+                <i class="chevron up"></i>
+                }
+            @case('EAST') {
+                <i class="chevron right"></i>
+            }
+            @case('SOUTH') {
+                <i class="chevron down"></i>
+            }
+            @case('WEST') {
+                <i class="chevron left"></i>
+            }
+            @default {
+                ⬆️
+            }
+        }   
+    </div>
+    <div class="robot-emoji">
+        <!-- NOTE - using an emoji due to time constraints. Would be able to create using SVG shapes if needed. -->
+        🤖
+    </div>
+</div>
+
+
+
+

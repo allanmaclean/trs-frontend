@@ -1,11 +1,18 @@
 <main>
-  <div class="fixed-grid">
-    <ng-container *ngFor="let y of rows">
-      <ng-container *ngFor="let x of cols">
-        <div class="grid-item" (click)="placeRobot(x, y)">
-          ({{ x }}, {{ y }})
-        </div>
+  <div>
+    <div class="fixed-grid">
+      <ng-container *ngFor="let y of rows">
+        <ng-container *ngFor="let x of cols">
+          <div class="grid-item" (click)="placeRobot(x, y)">
+            <app-robot *ngIf="xPosition === x && yPosition === y" [direction]="direction()"></app-robot>
+          </div>
+        </ng-container>
       </ng-container>
-    </ng-container>
+    </div>
+    <div class="button-container">
+      <button (click)="turnLeft()">Left</button>
+      <button>Move</button>
+      <button (click)="turnRight()">Right</button>
+    </div>
   </div>
 </main>

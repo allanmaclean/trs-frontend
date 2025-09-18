@@ -1,0 +1,34 @@
+.robot-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.chevron {
+  border: solid #26B8BC;
+  border-width: 0 3px 3px 0;
+  display: block;
+  padding: 3px;
+  margin-bottom: 0.5rem;
+}
+
+.chevron.right {
+  transform: rotate(-45deg);
+}
+
+.chevron.left {
+  transform: rotate(135deg);
+}
+
+.chevron.up {
+  transform: rotate(-135deg);
+}
+
+.chevron.down {
+  transform: rotate(45deg);
+}
+
+.robot-emoji {
+    font-size: 2rem;
+}

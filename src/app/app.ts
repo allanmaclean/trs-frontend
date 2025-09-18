@@ -1,18 +1,23 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataService } from './data.service';
+import { RobotComponent } from './robot/robot';
+
+const DIRECTIONS = ['NORTH', 'EAST', 'SOUTH', 'WEST'];
+type Direction = typeof DIRECTIONS[number];
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule],
+  imports: [CommonModule, RobotComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
+
 export class App {
   readonly gridSize = 5;
   readonly rows: number[] = Array.from({ length: this.gridSize }, (_, y) => y).reverse();
   readonly cols: number[] = Array.from({ length: this.gridSize }, (_, x) => x);
-  direction: 'NORTH' | 'EAST' | 'SOUTH' | 'WEST' = 'NORTH'; // This should probably be an array if we need to jump from west to north etc
+  direction = signal<Direction>('NORTH');
   xPosition = 0;
   yPosition = 0;
 
@@ -32,5 +37,17 @@ export class App {
       this.yPosition = y;
       this.dataService.updatePosition(x, y);
     }
+  }
+
+  turnLeft() {
+    console.log('LEFT');
+    const idx = DIRECTIONS.indexOf(this.direction());
+    this.direction.set(DIRECTIONS[(idx + DIRECTIONS.length - 1) % DIRECTIONS.length]);
+  }
+
+  turnRight() {
+    console.log('RIGHT');
+    const idx = DIRECTIONS.indexOf(this.direction());
+    this.direction.set(DIRECTIONS[(idx + 1) % DIRECTIONS.length]);
   }
 }
