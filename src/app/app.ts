@@ -50,4 +50,34 @@ export class App {
     const idx = DIRECTIONS.indexOf(this.direction());
     this.direction.set(DIRECTIONS[(idx + 1) % DIRECTIONS.length]);
   }
+
+  move() {
+    console.log('MOVE');
+    switch (this.direction()) {
+      case 'NORTH':
+        if (this.yPosition < this.gridSize - 1) {
+          this.yPosition++;
+          this.dataService.updatePosition(this.xPosition, this.yPosition);
+        }
+        break;
+        case 'EAST':
+        if (this.xPosition < this.gridSize - 1) {
+          this.xPosition++;
+          this.dataService.updatePosition(this.xPosition, this.yPosition);
+        }
+        break;
+      case 'SOUTH':
+        if (this.yPosition > 0) {
+          this.yPosition--;
+          this.dataService.updatePosition(this.xPosition, this.yPosition);
+        }
+        break;
+      case 'WEST':
+        if (this.xPosition > 0) {
+          this.xPosition--;
+          this.dataService.updatePosition(this.xPosition, this.yPosition);
+        }
+        break;
+    }
+  }
 }
