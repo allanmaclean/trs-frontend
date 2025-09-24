@@ -14,14 +14,14 @@ export type Direction = typeof DIRECTIONS[number];
 })
 
 export class App {
-  readonly gridSize = 5;
-  readonly rows: number[] = Array.from({ length: this.gridSize }, (_, y) => y).reverse();
-  readonly cols: number[] = Array.from({ length: this.gridSize }, (_, x) => x);
+  gridSize = 5;
+  rows: number[] = Array.from({ length: this.gridSize }, (_, y) => y).reverse();
+  cols: number[] = Array.from({ length: this.gridSize }, (_, x) => x);
   direction = signal<Direction>('NORTH');
   xPosition = 0;
   yPosition = 0;
   instructionsText = "Click to place the robot, use the buttons or arrows to move"
-
+  history: string[] = [];
   private dataService = inject(DataService);
 
   ngOnInit() {
@@ -32,6 +32,13 @@ export class App {
       this.direction.set(moveData[2] as Direction);
     });
   }
+
+  setGridSize(newSize: string) {
+  this.gridSize = Number(newSize);
+  this.rows = Array.from({ length: this.gridSize }, (_, y) => y).reverse();
+  this.cols = Array.from({ length: this.gridSize }, (_, x) => x);
+  document.documentElement.style.setProperty('--grid-size', newSize.toString());
+}
 
   placeRobot(x: number, y: number) {
     if (this.xPosition !== x || this.yPosition !== y) {
@@ -105,6 +112,32 @@ export class App {
     const report = `Output: ${this.xPosition},${this.yPosition},${this.direction()}`;
     (event.target as HTMLElement).blur();
     alert(report);
+  }
+
+  getHistory() {
+    console.log('getHistory')
+    this.dataService.getHistory().subscribe((data) => {
+      
+      // const cleanHistory = [];
+      // let prev = null;
+      // let cur = null;
+      // for (let i = 0; i < data.length; i++) {
+      //   let moveArr = data[i].move.split(',');
+      //   moveArr.splice(-1, 1)
+      //   let moveStr = moveArr.join(',')
+      //   console.log(moveArr)
+      //   if (prev !== moveStr) {
+      //     cleanHistory.push(moveStr)
+      //     prev = moveStr
+      //   }
+      // }
+      // this.history = cleanHistory
+      this.history = data.map((obj: {id: number, move: string}) => obj.move)
+      // this.history = data.map((obj: {id: number, move: string}) => {
+      //   obj.move.split()
+      // })
+    })
+
   }
 
   

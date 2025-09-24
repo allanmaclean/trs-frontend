@@ -27,4 +27,9 @@ export class DataService {
       error: (error) => console.error('Error updating position', error)
     });
   }
+
+  getHistory(): Observable<any> {
+    console.log('gh ds')
+    return this.http.get(`${environment.apiUrl}/history`);
+  }
 }

@@ -3,7 +3,7 @@
     <div class="instructions-container">
       <p>{{ instructionsText}}</p>
     </div>
-    <div class="fixed-grid">
+    <div [style.--gridSize]="gridSize" class="fixed-grid">
       <ng-container *ngFor="let y of rows">
         <ng-container *ngFor="let x of cols">
           <div class="grid-item" (click)="placeRobot(x, y)">
@@ -19,6 +19,13 @@
     </div>
     <div class="button-container report">
       <button (click)="reportPosition($event)">Report</button>
+    </div>
+    <div>
+      <button class="button-container" (click)="getHistory()">Display History</button>
+      <input type="text" (change)="setGridSize($event.target.value)" placeholder="Set Grid Size" />
+      <ul>
+        <li *ngFor="let move of history" style="color: white">{{move}}</li>
+      </ul>
     </div>
   </div>
 </main>
